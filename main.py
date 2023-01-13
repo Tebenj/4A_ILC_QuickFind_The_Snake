@@ -1,8 +1,8 @@
 # echo build up
+# écrire que Benjamin était absent dans le compte rendu
 
 from flask import Flask, request
-# import json
-# from collections import namedtuple
+import pandas as pd
 
 app = Flask(__name__)
 
@@ -12,21 +12,20 @@ class Transaction:
         self.P2 = P2
         self.t = t
         self.s = s
-    # def toJSON(self):
-    #     return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)
 
 class Personne:
     def __init__(self, solde, transactions):
         self.solde = solde
         self.transactions = transactions
-    # def toJSON(self):
-    #     return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)
-
-# def JSONDecoder(dict):
-#     return namedtuple('X', dict.keys())(*dict.values())
 
 transactions = []
 personnes = []
+
+personnesData = pd.read_csv('personnes.csv', names= ['solde', 'transactions'],engine='python', sep=';')
+personnes = list(personnesData.to_dict('index').values())
+
+transactionsData = pd.read_csv('transactions.csv', names= ['P1', 'P2', 's', 't'],engine='python', sep=';')
+transactions = list(transactionsData.to_dict('index').values())
 
 @app.route('/')
 def listeTransactions():
