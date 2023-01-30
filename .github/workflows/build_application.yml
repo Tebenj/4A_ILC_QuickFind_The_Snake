@@ -21,4 +21,5 @@ jobs:
       - name: build application
         run: | 
          pip3 install flask
+         pip install pandas
          python main.py check_syntax
