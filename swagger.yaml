@@ -1,0 +1,221 @@
+swagger: "2.0" 
+info:
+  title: CI-CD_4A_TP_Projet
+  description: |-
+    Projet réalisé par Benjamin Girod et Federico Di Spirito.
+    
+    Objectif : Créer une API Flask codée en python pour de la gestion CRUD d’un système de transaction
+    
+    Afin de réaliser cette API, nous avons définis différents EndPoints permettant la gestion CRUD d'un système de transaction.
+    
+    
+    - [Lien de notre dépot Github](https://github.com/Tebenj/4A_ILC_QuickFind_The_Snake)
+    
+    
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+tags:
+  - name: Transaction
+    description: Description de nos EndPoints liés aux transactions
+  - name: Personne
+    description: Description de nos EndPoints liés aux personnes
+  - name: Solde
+    description: Description de nos EndPoints liés au solde
+  
+schemes:
+  - http
+  
+  
+paths:
+  /:
+    get:
+      tags:
+        - Transaction
+      summary: Liste de toutes les transactions
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Liste de toutes les transactions
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                P1:
+                  type: integer
+                P2:
+                  type: integer
+                t:
+                  type: integer
+                s:
+                  type: integer
+                  
+  /personnes:
+    get:
+      tags: 
+        - Personne
+      summary: Liste de toutes les personnes
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Liste de toutes les personnes
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                solde:
+                  type: string
+                transactions:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      P1:
+                        type: integer
+                      P2:
+                        type: integer
+                      t:
+                        type: integer
+                      s:
+                        type: integer
+                        
+  /personnes/transactions/{personne}:
+    get:
+      tags:
+        - Transaction
+      summary: Transactions pour une personne spécifique
+      produces:
+        - application/json
+      parameters:
+        - name: personne
+          in: path
+          required: true
+          type: integer
+      responses:
+        200:
+          description: Transactions pour une personne spécifique
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                P1:
+                  type: integer
+                P2:
+                  type: integer
+                t:
+                  type: integer
+                s:
+                  type: integer
+
+  /personnes/solde/{personne}:
+    get:
+      tags: 
+        - Solde
+      summary: Solde pour une personne spécifique
+      produces:
+        - application/json
+      parameters:
+        - name: personne
+          in: path
+          required: true
+          type: integer
+      responses:
+        200:
+          description: Solde pour une personne spécifique
+          schema:
+            type: object
+            properties:
+              solde:
+                type: string
+
+  /addPersonne:
+    post:
+      tags:
+        - Personne
+      summary: Ajout d'une nouvelle personne
+      produces:
+        - application/json
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - name: solde
+          in: formData
+          required: true
+          type: string
+      responses:
+        200:
+          description: Personne ajouté
+          schema:
+            type: object
+            properties:
+              solde:
+                type: string
+              transactions:
+                type: array
+                items:
+                  items:
+                    type: object
+                    properties:
+                      P1:
+                        type: integer
+                      P2:
+                        type: integer
+                      t:
+                        type: integer
+                      s:
+                        type: integer
+                        
+  /addTransaction:
+    post:
+      tags:
+        - Transaction
+      summary: Ajouter une transaction
+      produces:
+        - application/json
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - name: P1
+          in: formData
+          type: integer
+          required: true
+          description: Identifiant de la première personne impliquée dans la transaction
+        - name: P2
+          in: formData
+          type: integer
+          required: true
+          description: Identifiant de la deuxième personne impliquée dans la transaction
+        - name: t
+          in: formData
+          type: integer
+          required: true
+          description: Instant t de la transaction
+        - name: s
+          in: formData
+          type: integer
+          required: true
+          description: Montant de la transaction
+      responses:
+        200:
+          description: La transaction a été ajoutée avec succès
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                P1:
+                  type: integer
+                P2:
+                  type: integer
+                t:
+                  type: integer
+                s:
+                  type: integer
+
+  
