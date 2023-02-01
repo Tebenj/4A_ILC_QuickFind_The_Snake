@@ -13,7 +13,7 @@ class Transaction:
         self.P2 = P2
         self.t = t
         self.s = s
-        self.h = hashTransaction(P1, P2, s)
+        self.h = hashTransaction(P1, P2, t, s)
 
 class Personne:
     def __init__(self, solde, transactions):
@@ -90,12 +90,12 @@ def verification():
     if request.method == 'GET':
         verify = True
         for transaction in transactions:
-            if(hashTransaction(transaction['P1'], transaction['P2'], transaction['s']) != transaction['h']):
+            if(hashTransaction(transaction['P1'], transaction['P2'], transaction['t'], transaction['s']) != transaction['h']):
                 verify = False
         return "Données vérifiées" if verify else "Données corrompues"
 
 #hash function
-def hashTransaction(P1, P2, s):
+def hashTransaction(P1, P2, t, s):
     sha256 = hashlib.sha256()
-    sha256.update((str(P1) + str(P2) + str(s)).encode())
+    sha256.update((str(P1) + str(P2) + str(t) + str(s)).encode())
     return sha256.hexdigest()
