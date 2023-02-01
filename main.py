@@ -85,7 +85,14 @@ def addTransaction(): # ajoute une nouvelle transaction
         personnes[P2_index] = {'solde': P2.solde, 'transactions': P2.transactions}
         return listeTransactions()
 
-
+@app.route('/verification', methods=["GET"])
+def verification():
+    if request.method == 'GET':
+        verify = True
+        for transaction in transactions:
+            if(hashTransaction(transaction['P1'], transaction['P2'], transaction['s']) != transaction['h']):
+                verify = False
+        return "Données vérifiées" if verify else "Données corrompues"
 
 #hash function
 def hashTransaction(P1, P2, s):
