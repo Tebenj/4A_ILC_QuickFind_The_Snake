@@ -3,6 +3,7 @@
 
 from flask import Flask, request
 import pandas as pd
+import hashlib
 
 app = Flask(__name__)
 
@@ -12,6 +13,9 @@ class Transaction:
         self.P2 = P2
         self.t = t
         self.s = s
+        sha256 = hashlib.sha256()
+        sha256.update(str(P1) + str(P2) + str(t) + str(s))
+        self.h = sha256.hexdigest()
 
 class Personne:
     def __init__(self, solde, transactions):
