@@ -29,7 +29,7 @@ personnes = [] # liste des personnes
 personnesData = pd.read_csv('personnes.csv', names= ['solde', 'transactions'],engine='python', sep=';')
 personnes = list(personnesData.to_dict('index').values())
 
-transactionsData = pd.read_csv('transactions.csv', names= ['P1', 'P2', 's', 't'],engine='python', sep=';')
+transactionsData = pd.read_csv('transactions.csv', names= ['P1', 'P2', 's', 't', 'h'],engine='python', sep=';')
 transactions = list(transactionsData.to_dict('index').values())
 
 @app.route('/')
@@ -76,7 +76,8 @@ def addTransaction(): # ajoute une nouvelle transaction
         s2 += s
         P1.solde = str(s1)
         P2.solde = str(s2)
-        tr = {'P1': P1_index, 'P2': P2_index, 't': t, 's': s}
+        transaction = Transaction(P1_index, P2_index, t, s)
+        tr = {'P1': transaction.P1, 'P2': transaction.P2, 't': transaction.t, 's': transaction.s, 'h': transaction.h}
         transactions.append(tr)
         P1.transactions.append(tr)
         P2.transactions.append(tr)
@@ -89,12 +90,12 @@ def verification():
     if request.method == 'GET':
         verify = True
         for transaction in transactions:
-            if(hashTransaction(transaction.P1, transaction.P2, transaction.t, transaction.s) != transaction.h):
+            if(hashTransaction(transaction['P1'], transaction['P2'], transaction['t'], transaction['s']) != transaction['h']):
                 verify = False
         return "Données vérifiées" if verify else "Données corrompues"
 
 
 def hashTransaction(P1, P2, t, s):
     sha256 = hashlib.sha256()
-    sha256.update(str(P1) + str(P2) + str(t) + str(s))
+    sha256.update((str(P1) + str(P2) + str(t) + str(s)).encode())
     return sha256.hexdigest()
