@@ -13,7 +13,7 @@ new_push.yml : Action qui se déclenche à chaque push sur la branche main pour 
 
 ![example workflow](https://github.com/Tebenj/4A_ILC_QuickFind_The_Snake/actions/workflows/Docker_push_GCR.yml/badge.svg)
 
-# Workflows réalisé pour le projet : 
+# Workflows réalisés pour le projet : 
 
 build_application.yml : Action qui se déclenche à chaque push. Elle va pip3 install flask dans un premier temps, puis installer la bibliothèque pandas et enfin va build notre app main.py. (Correspond à la 1ère github action demandé)
 
