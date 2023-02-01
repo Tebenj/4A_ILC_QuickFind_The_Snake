@@ -217,5 +217,14 @@ paths:
                   type: integer
                 s:
                   type: integer
-
-  
+                  
+  /verification:
+    get:
+      tags:
+        - Transaction
+      summary: Vérifier la validité de la transaction
+      responses:
+        200:
+          description: Données vérifiées
+        400:
+          description: Données corrompues
