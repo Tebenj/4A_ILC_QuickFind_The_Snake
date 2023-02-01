@@ -13,7 +13,7 @@ class Transaction:
         self.P2 = P2
         self.t = t
         self.s = s
-        self.h = hashTransaction(P1, P2, t, s)
+        self.h = hashTransaction(P1, P2, s)
 
 class Personne:
     def __init__(self, solde, transactions):
@@ -84,6 +84,8 @@ def addTransaction(): # ajoute une nouvelle transaction
         personnes[P1_index] = {'solde': P1.solde, 'transactions': P2.transactions}
         personnes[P2_index] = {'solde': P2.solde, 'transactions': P2.transactions}
         return listeTransactions()
+
+
 
 #hash function
 def hashTransaction(P1, P2, s):
