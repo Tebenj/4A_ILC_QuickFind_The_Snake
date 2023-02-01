@@ -23,7 +23,7 @@ Nous avons deux fichiers .csv différents qui utilisent tous deux la bibliothèq
 
 personnes.csv : Ce fichier contient deux colonnes 'solde' et 'transactions' séparées avec ';' 
 
-transaction.csv : Ce fichier contient quatre colonnes 'P1', 'P2', 's', 't' et 'h' séparées aussi avec ';' P1 et P2 représentent les personnes liées à la transaction, s la somme d'argent transféré, t l'heure de la transaction et h l'hash.
+transaction.csv : Ce fichier contient cinq colonnes 'P1', 'P2', 's', 't' et 'h' séparées aussi avec ';' P1 et P2 représentent les personnes liées à la transaction, s la somme d'argent transféré, t l'heure de la transaction et h l'hash.
 
 # Fichier Swagger
   
