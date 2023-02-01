@@ -10,7 +10,7 @@ L'objectif est de créer une API Flask pour de la gestion CRUD d’un système d
 
 # Réalisation d'une première version de l’API REST  
 
-En utilisant Flask, nous avons réaliser une première version de l’API.  
+En utilisant Flask, nous avons réalisé une première version de l’API.  
   
 Voici une liste des actions qui ont été mises en place via un appel HTTP sur API:
 * E1 - Enregistrer une transaction.
@@ -19,11 +19,11 @@ Voici une liste des actions qui ont été mises en place via un appel HTTP sur A
 * E4 - Afficher le solde du compte de la personne.
 * E5 - Importer des données depuis un fichier .csv
 
-Nous avons deux fichiers .csv différents qui utilise tous deux la bibliothèque pandas : 
+Nous avons deux fichiers .csv différents qui utilisent tous deux la bibliothèque pandas : 
 
 personnes.csv : Ce fichier contient deux colonnes 'solde' et 'transactions' séparées avec ';' 
 
-transaction.csv : Ce fichier contient quatre colonnes 'P1', 'P2', 's', 't' séparées aussi avec ';' P1 et P2 représentent les personnes liées à la transaction, s la somme d'argent transféré et t l'heure de la transaction.
+transaction.csv : Ce fichier contient quatre colonnes 'P1', 'P2', 's', 't' et 'h' séparées aussi avec ';' P1 et P2 représentent les personnes liées à la transaction, s la somme d'argent transféré, t l'heure de la transaction et h l'hash.
 
 # Fichier Swagger
   
@@ -31,7 +31,7 @@ Le fichier swagger est disponible sur le dépot. Ce fichier détaille les diffé
 
 # Préparer l’intégration continue (CI)
 
-Les trois github actions demandées ont été réalisée :
+Les trois github actions demandées ont été réalisées :
 
 * Une déclenchée à chaque changement pour builder l’application. 
 
@@ -49,9 +49,9 @@ Les trois github actions demandées ont été réalisée :
 
 Nous possèdons 4 release différentes : 
 
-* v1.0.0 : Cette release contient les différents endpoint, les github actions ainsi que le fichier swagger.
+* v1.0.0 : Cette release contient les différents endpoints, les github actions ainsi que le fichier swagger.
 
-* v1.1.0 : Cette release contient l'ajout de la fonction hachage au projet. Nous avons opté pour la fonction de hachage sha-256 qui est utilisé pour vérifier l'intégrité des données en s'assurant que les données originales n'ont pas été altérées ou corrompues au cours du stockage ou de la transmission. Elle produit un haché de 256 bits.
+* v1.1.0 : Cette release contient l'ajout de la fonction hachage au projet. Nous avons opté pour la fonction de hachage sha-256 qui est utilisée pour vérifier l'intégrité des données en s'assurant que les données originales n'ont pas été altérées ou corrompues au cours du stockage ou de la transmission. Elle produit un haché de 256 bits.
 
 * v2.0.0 : Cette release ajoute la vérification de l'intégrité des données
 
