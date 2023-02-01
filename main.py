@@ -13,18 +13,19 @@ class Transaction:
         self.P2 = P2
         self.t = t
         self.s = s
-        sha256 = hashlib.sha256()
-        sha256.update(str(P1) + str(P2) + str(t) + str(s))
-        self.h = sha256.hexdigest()
+        self.h = hashTransaction(P1, P2, t, s)
 
 class Personne:
     def __init__(self, solde, transactions):
         self.solde = solde
         self.transactions = transactions
 
-transactions = []
-personnes = []
+transactions = [] # liste des transactions
+personnes = [] # liste des personnes
 
+#
+# importation des données des fichiers csv
+#
 personnesData = pd.read_csv('personnes.csv', names= ['solde', 'transactions'],engine='python', sep=';')
 personnes = list(personnesData.to_dict('index').values())
 
@@ -32,34 +33,34 @@ transactionsData = pd.read_csv('transactions.csv', names= ['P1', 'P2', 's', 't']
 transactions = list(transactionsData.to_dict('index').values())
 
 @app.route('/')
-def listeTransactions():
+def listeTransactions(): # retourne la liste des transactions
     transactions.sort(key=lambda tr: tr['t'])
     return transactions
 
 @app.route('/personnes')
-def listPersonnes():
+def listPersonnes(): # retourne la liste des personnes
     return personnes
 
 @app.route('/personnes/transactions/<personne>')
-def transactionsPersonne(personne):
+def transactionsPersonne(personne): # retourne la liste des transactions d'une personne
     if request.method == 'GET':
         return personnes[int(personne)]['transactions']
 
 @app.route('/personnes/solde/<personne>')
-def soldePersonne(personne):
+def soldePersonne(personne): # retourne le solde d'une personne
     if request.method == 'GET':
         return personnes[int(personne)]['solde']
 
 
 @app.route('/addPersonne', methods=["POST"])
-def addPersonne():
+def addPersonne(): # ajoute une nouvelle personne
     if request.method == 'POST':
         solde = request.form.get('solde')
         personnes.append({'solde': solde, 'transactions': []})
         return listPersonnes()
 
 @app.route('/addTransaction', methods=["POST"])
-def addTransaction():
+def addTransaction(): # ajoute une nouvelle transaction
     if request.method == 'POST':
         P1_index = int(request.form.get('P1'))
         P2_index = int(request.form.get('P2'))
@@ -82,3 +83,18 @@ def addTransaction():
         personnes[P1_index] = {'solde': P1.solde, 'transactions': P2.transactions}
         personnes[P2_index] = {'solde': P2.solde, 'transactions': P2.transactions}
         return listeTransactions()
+
+@app.route('/verification', methods=["GET"])
+def verification():
+    if request.method == 'GET':
+        verify = True
+        for transaction in transactions:
+            if(hashTransaction(transaction.P1, transaction.P2, transaction.t, transaction.s) != transaction.h):
+                verify = False
+        return "Données vérifiées" if verify else "Données corrompues"
+
+
+def hashTransaction(P1, P2, t, s):
+    sha256 = hashlib.sha256()
+    sha256.update(str(P1) + str(P2) + str(t) + str(s))
+    return sha256.hexdigest()
