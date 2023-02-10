@@ -74,5 +74,7 @@ Les données des personnes et des transactions sont stockées dans des fichiers 
 * '/addTransaction' ajoute une nouvelle transaction à la liste des transactions via une requête POST : appelé dans un aurtre terminal avec la commande: curl -X GET http://localhost:5000/addTransaction
 
 * '/verification' vérifie l'intégrité des données en comparant les hashs des transactions avec les hashs recalculés : : appelé dans un aurtre terminal avec la commande: curl -X GET http://localhost:5000/verification
-  
+
+
+[![](https://img.shields.io/badge/PROJET_TERMINÉ_🚀-059142?style=for-the-badge&logoColor=white)](https://dev.to/envoy_/150-badges-for-github-pnk)
   
